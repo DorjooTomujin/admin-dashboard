@@ -19,8 +19,19 @@ const theme = extendTheme({
         }
     },
     colors: {
-        over: {
-            100: '#d9d9d9'
+        pink: {
+            main: '#F1416C'
+        },
+        gray: {
+            main: '#e9edf1',
+            secondary: '#7e8299'
+        },
+        green: {
+            main: '#50cd89',
+            secondary: '#e8fff3',
+        },
+        blue: {
+            main: '#009ef7'
         }
     }
 })
