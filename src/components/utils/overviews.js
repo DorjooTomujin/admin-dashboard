@@ -249,9 +249,9 @@ export const ProjectOverview = ({ bg, color }) => {
       </ButtonStat>
       <DefaultTable items={projectItems}>
         {projectData &&
-          projectData.map((data) => {
+          projectData.map((data, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td>
                   <DefaultCard
                     img={data.img}

@@ -59,9 +59,9 @@ export const DefaultTable = ({items, children}) => {
       <Table variant={'simple'}>
         <Thead>
           <Tr>
-            {items && items.map((i) => {
+            {items && items.map((i, index) => {
               return (
-                <Th><Text textTransform={'uppercase'} color='gray.secondary'>{i}</Text></Th>
+                <Th key={index}><Text textTransform={'uppercase'} color='gray.secondary'>{i}</Text></Th>
               )
             })}
           </Tr>
