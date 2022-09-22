@@ -2,13 +2,34 @@ import {
   Box,
   Button,
   HStack,
+  Image,
+  MenuButton,
+  Select,
+  Stat,
+  StatHelpText,
+  StatLabel,
+  StatNumber,
+  TabPanel,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { DatePicker as ChakraDatePicker } from "@orange_digital/chakra-datepicker";
 import { useState } from "react";
-import { LinesChart, RadarChart } from "./charts";
-import { AuthorsTab, PerformanceTab } from "./tabs";
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import ReactSelect from "react-select";
+import DefaultGeo from "../../../pages/geos";
+import { DefaultCard, ImageCard } from "./cards";
+import {
+  AreaChart,
+  BarChart,
+  LineChart,
+  LinesChart,
+  RadarChart,
+} from "./charts";
+import { ButtonStat, ColorfulStat, DefaultStat, MenuStat } from "./stats";
+import { DefaultTable } from "./tables";
+import { AuthorsTab, DefaultTab, LongTab, PerformanceTab } from "./tabs";
+import { WithPercentText } from "./texts";
 
 export const PerformanceOverview = ({ bg, color }) => {
   return (
@@ -19,10 +40,11 @@ export const PerformanceOverview = ({ bg, color }) => {
       py={4}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
-      w={"600px"}
+
       h={"600px"}
       justifyContent="space-between"
       alignItems={"start"}
+      w='50%'
     >
       <PerformanceTab />
     </VStack>
@@ -38,7 +60,7 @@ export const AuthorsOverview = ({ bg, color }) => {
       py={4}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
-      w={"700px"}
+      w='50%'
       h={"600px"}
       justifyContent="space-between"
       alignItems={"start"}
@@ -49,7 +71,6 @@ export const AuthorsOverview = ({ bg, color }) => {
 };
 
 export const LineOverview = ({ bg, color }) => {
-
   return (
     <VStack
       bg={bg}
@@ -90,8 +111,8 @@ export const RadarOverview = ({ bg, color }) => {
       py={4}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
-      w={"400px"}
-      h={"450px"}
+      w={"30%"}
+      h={"auto"}
       justifyContent="space-between"
       alignItems={"center"}
     >
@@ -103,9 +124,351 @@ export const RadarOverview = ({ bg, color }) => {
 
         <Button>PDF Report</Button>
       </HStack>
-      <Box w='100%' mx={'auto'}>
-        <RadarChart/>
+      <Box w="100%" mx={"auto"}>
+        <RadarChart />
       </Box>
+    </VStack>
+  );
+};
+
+
+
+export const AreaOverflow = ({ bg, color, areaItems, areaFilter }) => {
+  return (
+    <VStack
+      bg={bg}
+      borderRadius={"10px"}
+      px={8}
+      py={4}
+      boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
+      color={color}
+      w={"30%"}
+
+      justifyContent="space-between"
+      alignItems={"center"}
+    >
+
+      <DefaultTab items={areaFilter}>
+        {areaFilter &&
+          areaFilter.map((i, index) => {
+            return (
+              <TabPanel w="full" key={index}>
+                <VStack w="full">
+                  <AreaChart filter={i}/>
+                  {
+                    areaItems[i] && areaItems[i].map((item, idx) => {
+                      return (
+                        <HStack justifyContent={"space-between"} w="full" key={idx}>
+                    <Text>{item}</Text>
+                    <HStack gap={4}>
+                      <Text>1234</Text>
+                      <Text color={"green.main"}>+134</Text>
+                    </HStack>
+                  </HStack>
+                      )
+                    })
+                  }
+                </VStack>
+              </TabPanel>
+            );
+          })}
+      </DefaultTab>
+    </VStack>
+  );
+};
+
+const projectItems = ["item", "budget", "progress", "status", "chart", "view"];
+
+const projectData = [
+  {
+    img: "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+    title: "Mivy App",
+    text: "Jane Cooper",
+    budget: "$32.400",
+    progress: "9.2%",
+    status: "In Progress",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+    title: "Avionica",
+    text: "Esther Howard",
+    budget: "$256,910",
+    progress: "0.4%",
+    status: "on hold",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+    title: "Tower Hill",
+    text: "Cody Fisher",
+    budget: "$8,220",
+    progress: "9.2%",
+    status: "complated",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+    title: "Mivy App",
+    text: "Jane Cooper",
+    budget: "$32.400",
+    progress: "9.2%",
+    status: "In Progress",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+    title: "Avionica",
+    text: "Esther Howard",
+    budget: "$256,910",
+    progress: "0.4%",
+    status: "on hold",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+    title: "Tower Hill",
+    text: "Cody Fisher",
+    budget: "$8,220",
+    progress: "9.2%",
+    status: "complated",
+  },
+];
+
+export const ProjectOverview = ({ bg, color }) => {
+  return (
+    <VStack
+      bg={bg}
+      borderRadius={"10px"}
+      px={8}
+      py={4}
+      boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
+      color={color}
+      w={"70%"}
+      h={"500px"}
+      justifyContent="space-between"
+      alignItems={"center"}
+    >
+      <ButtonStat text={"Updated 37 minutes ago"}>
+        <Text fontWeight={700}>Project Stats</Text>
+      </ButtonStat>
+      <DefaultTable items={projectItems}>
+        {projectData &&
+          projectData.map((data) => {
+            return (
+              <tr>
+                <td>
+                  <DefaultCard
+                    img={data.img}
+                    title={data.title}
+                    text={data.text}
+                  />
+                </td>
+                <td>
+                  <Text fontWeight={700}>{data.budget}</Text>
+                </td>
+                <td>
+                  <Box
+                    w={"auto"}
+                    display="inline"
+                    mx={"auto"}
+                    color={"green.main"}
+                    bg="green.secondary"
+                    borderRadius={4}
+                  >
+                    <HStack>
+                      <Box>
+                        <BsFillArrowRightSquareFill />
+                      </Box>
+                      <Text>{data.progress}</Text>
+                    </HStack>
+                  </Box>
+                </td>
+                <td>
+                  <Box display={"inline-block"} w="auto">
+                    <ColorfulStat
+                      text={data.status}
+                      color={"blue.main"}
+                      bg="blue.secondary"
+                    />
+                  </Box>
+                </td>
+                <td>
+                  <Box w="100px">
+                    <LineChart />
+                  </Box>
+                </td>
+                <td>
+                  <Box>
+                    <BsFillArrowRightSquareFill />
+                  </Box>
+                </td>
+              </tr>
+            );
+          })}
+      </DefaultTable>
+    </VStack>
+  );
+};
+
+export const BarOverview = ({ bg, color }) => {
+  return (
+    <VStack
+      bg={bg}
+      borderRadius={"10px"}
+      px={8}
+      py={4}
+      boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
+      color={color}
+      w={"70%"}
+      h={'500px'}
+      justifyContent="space-between"
+      alignItems={"center"}
+    >
+      <HStack>
+        <Box>
+          <BarChart />
+        </Box>
+        <Box>
+          <DefaultGeo />
+        </Box>
+      </HStack>
+    </VStack>
+  );
+};
+
+export const GridOverview = () => {
+  return (
+    <HStack
+      gap={6}
+      px={8}
+      py={4}
+      justifyContent="space-between"
+      alignItems={"center"}
+    >
+      <ImageCard
+        bg={"orange.skin"}
+        img={
+          "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/shapes/bitcoin.svg"
+        }
+        text={"0.44554576 BTC"}
+        text1={"19,335,45 USD"}
+      >
+        <MenuStat text={"36,668 USD from 1 BTC"}>
+          <Text fontWeight={600}>Bitcoin</Text>
+        </MenuStat>
+      </ImageCard>
+      <ImageCard
+        bg={"pink.skin"}
+        img={
+          "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/shapes/ethereum.svg"
+        }
+        text={"0.44554576 BTC"}
+        text1={"19,335,45 USD"}
+      >
+        <MenuStat text={"36,668 USD from 1 BTC"}>
+          <Text fontWeight={600}>Etherium</Text>
+        </MenuStat>
+      </ImageCard>
+      <ImageCard
+        bg={"green.skin"}
+        img={
+          "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/shapes/dogecoin.svg"
+        }
+        text={"29.33460000 ETH"}
+        text1={"19,335,45 USD"}
+      >
+        <MenuStat text={"36,668 USD from 1 BTC"}>
+          <Text fontWeight={600}>Bitcoin</Text>
+        </MenuStat>
+      </ImageCard>
+    </HStack>
+  );
+};
+
+const transferItems = ["Buy", "Sell"];
+
+const selectData = [
+  {
+    value: "Bitcoin/BTC",
+    label: "Bitcoin/BTC",
+    image:
+      "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/coins/bitcoin.svg",
+  },
+  {
+    value: "Ethereum/ETH",
+    label: "Ethereum/ETH",
+    image:
+      "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/coins/ethereum.svg",
+  },
+  {
+    value: "Filecoin/FLE",
+    label: "Filecoin/FLE",
+    image:
+      "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/coins/filecoin.svg",
+  },
+  {
+    value: "Chainlink/CIN",
+    label: "Chainlink/CIN",
+    image:
+      "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/coins/chainlink.svg",
+  },
+  {
+    value: "Binance/BCN",
+    label: "Binance/BCN",
+    image:
+      "https://preview.keenthemes.com/metronic8/demo1/assets/media/svg/coins/binance.svg",
+  },
+];
+
+export const TransferOverview = ({ bg, color, value, setValue }) => {
+  return (
+    <VStack
+      bg={bg}
+      borderRadius={"10px"}
+      py={4}
+      boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
+      color={color}
+      w={"500px"}
+      h={"300px"}
+      justifyContent="space-between"
+      alignItems={"center"}
+    >
+      <LongTab items={transferItems}>
+        <TabPanel px={8}>
+          <ReactSelect
+            placeholder='Coin name'
+            options={selectData}
+            formatOptionLabel={(d) => (
+              <HStack>
+                <Image src={d.image} w='20px' h='20px' />
+                <Text>{d.label}</Text>
+              </HStack>
+            )}
+          />
+          <Box h='6'/>
+         <HStack w='full'>
+         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
+         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
+         </HStack>
+          <Box h='6'/>
+          <Button w='full' color={'white'} bg='blue.main'>Places offer</Button>
+        </TabPanel>
+        <TabPanel px={8}>
+          <ReactSelect
+            placeholder='Coin name'
+            options={selectData}
+            formatOptionLabel={(d) => (
+              <HStack>
+                <Image src={d.image} w='20px' h='20px' />
+                <Text>{d.label}</Text>
+              </HStack>
+            )}
+          />
+          <Box h='6'/>
+         <HStack w='full'>
+         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
+         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
+         </HStack>
+          <Box h='6'/>
+          <Button w='full' color={'white'} bg='blue.main'>Places offer</Button>
+        </TabPanel>
+      </LongTab>
     </VStack>
   );
 };

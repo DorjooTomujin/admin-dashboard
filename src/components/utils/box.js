@@ -2,6 +2,7 @@ import {
   Avatar,
   AvatarGroup,
   Box,
+  Button,
   Divider,
   Heading,
   HStack,
@@ -17,10 +18,11 @@ import {
 import { AiOutlineArrowUp } from "react-icons/ai";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Chart } from "chart.js";
-import {BsThreeDots} from 'react-icons/bs'
-import {RiShareForwardBoxLine} from 'react-icons/ri'
+import { BsThreeDots } from "react-icons/bs";
+import { RiShareForwardBoxLine } from "react-icons/ri";
 import { WithPercentText } from "./texts";
 import { DefaultMenu } from "./menus";
+import { DefaultModal } from "./modals";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const ActiveBox = ({ bg, num, pending, percent, color }) => {
@@ -99,7 +101,7 @@ export const EarningBox = ({ bg, num, percent, color }) => {
       alignItems={"start"}
     >
       <Box>
-        <WithPercentText num ='69,700' percent={'2.2'}/>
+        <WithPercentText num="69,700" percent={"2.2"} />
         <Text>Projects Earnings in April</Text>
       </Box>
       <HStack>
@@ -109,33 +111,49 @@ export const EarningBox = ({ bg, num, percent, color }) => {
   );
 };
 
-export const ProfessionalBox = ({ num, bg, color }) => {
+export const ProfessionalBox = ({
+  users,
+  bg,
+  color,
+  isOpen,
+  onOpen,
+  onClose,
+  battles
+}) => {
   return (
     <VStack
       bg={bg}
       borderRadius={"10px"}
       px={8}
-      py={4}
+      py={6}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
       w={"300px"}
-      h={"200px"}
       justifyContent="space-between"
       alignItems={"start"}
     >
-      <Box>
-        <Heading fontSize={32}>{num}</Heading>
-        <Text>Professionals</Text>
+      <HStack justifyContent={'space-between'} w='full'><Box textAlign={'start'}>
+        <Heading fontSize={32}>{users.length > 0 ? users.length : 0}</Heading>
+        <Text>Users</Text>
       </Box>
+      <Box textAlign={'end'}>
+        <Heading fontSize={32}>{battles > 0 ? battles : 0}</Heading>
+        <Text>Battles</Text>
+      </Box></HStack>
+      <Box h={4}/>
       <VStack alignItems={"start"}>
-        <Text fontWeight={700}>Today’s Heroes</Text>
-        <AvatarGroup size="md" max={4}>
-          <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-          <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
-          <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-          <Avatar name="Prosper Otemuyiwa" src="https://bit.ly/prosper-baba" />
-          <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
-        </AvatarGroup>
+        {/* <Text fontWeight={700}>Today’s Heroes</Text> */}
+        <Button variant={"unstyled"} onClick={onOpen}>
+            <AvatarGroup size="md" max={4}>
+              {users && users.map((u, index) => {
+                return (
+                  <Avatar name={u.name} src={u.img} key={index}/>
+                )
+              })}
+            </AvatarGroup>
+        </Button>
+          <DefaultModal isOpen={isOpen} onClose={onClose} users={users}>
+          </DefaultModal>
       </VStack>
     </VStack>
   );
@@ -157,24 +175,23 @@ export const ExternalLinkBox = ({ bg, color, num }) => {
     >
       <HStack justifyContent="space-between" w="full">
         <Heading fontSize={20}>External Links</Heading>
-        <DefaultMenu/>
+        <DefaultMenu />
       </HStack>
-      <Box h={4}/>
-      <HStack justifyContent={'space-between'} w='full'>
-        <Link color={'blue.main'}>Avg. Client Rating</Link>
-        <RiShareForwardBoxLine/>
+      <Box h={4} />
+      <HStack justifyContent={"space-between"} w="full">
+        <Link color={"blue.main"}>Avg. Client Rating</Link>
+        <RiShareForwardBoxLine />
       </HStack>
-      <Divider/>
-      <HStack justifyContent={'space-between'} w='full'>
-        <Link color={'blue.main'}>Avg. Client Rating</Link>
-        <RiShareForwardBoxLine/>
+      <Divider />
+      <HStack justifyContent={"space-between"} w="full">
+        <Link color={"blue.main"}>Avg. Client Rating</Link>
+        <RiShareForwardBoxLine />
       </HStack>
-      <Divider/>
-      <HStack justifyContent={'space-between'} w='full'>
-        <Link color={'blue.mainRiShareForwardBoxLine'}>Avg. Client Rating</Link>
-        <RiShareForwardBoxLine/>
+      <Divider />
+      <HStack justifyContent={"space-between"} w="full">
+        <Link color={"blue.mainRiShareForwardBoxLine"}>Avg. Client Rating</Link>
+        <RiShareForwardBoxLine />
       </HStack>
-
     </VStack>
   );
 };

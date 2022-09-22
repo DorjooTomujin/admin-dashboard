@@ -21,6 +21,7 @@ import {TiSocialAtCircular} from 'react-icons/ti'
 import {ImMobile} from 'react-icons/im'
 import { AuthorTable } from "./tables";
 import { DefaultMenu } from "./menus";
+import { MenuStat } from "./stats";
 export const PerformanceTab = ({ tabs, title, text }) => {
   return (
     <Tabs variant="unstyled" w={"full"}>
@@ -136,3 +137,41 @@ export const AuthorsTab = () => {
     </Tabs>
   );
 };
+
+export const DefaultTab = ({items, children}) => {
+  return (
+    <Tabs w='full' variant={'unstyled'}>
+          <MenuStat text={"Avg. Agent Earnings"}>
+      <WithPercentText num={"1234"} percent="9.2" />
+      </MenuStat>
+      <TabList w='full' justifyContent={'space-between'}>
+        {items && items.map((i) => {
+          return (
+            <Tab px={3} py={2} borderRadius={4} _selected={{bg:'pink.main', color:'white'}}><Text >{i}</Text></Tab>
+          )
+        })}
+      </TabList>
+      <TabPanels>
+      {children}
+      </TabPanels>
+    </Tabs>
+  )
+}
+
+export const LongTab = ({items, children}) => {
+  return (
+    <Tabs w='full' isFitted variant={'unstyled'}>
+      <TabList w='full' justifyContent={'space-between'}>
+        {items && items.map((i, index) => {
+          return (
+          <Tab px={3} py={2} borderRadius={4} key={index} _selected={{borderBottom: '2px solid #009ef7', fontWeight: 'bold'}}><Text >{i}</Text></Tab>
+          )
+        })}
+      </TabList>
+      <TabPanels>
+      {children}
+      </TabPanels>
+    </Tabs>
+  )
+}
+

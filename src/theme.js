@@ -20,7 +20,8 @@ const theme = extendTheme({
     },
     colors: {
         pink: {
-            main: '#F1416C'
+            main: '#F1416C',
+            skin: '#F3D6EF'
         },
         gray: {
             main: '#e9edf1',
@@ -29,9 +30,14 @@ const theme = extendTheme({
         green: {
             main: '#50cd89',
             secondary: '#e8fff3',
+            skin: '#BFDDE3'
         },
         blue: {
-            main: '#009ef7'
+            main: '#009ef7',
+            secondary: '#f1faff'
+        },
+        orange: {
+            skin: '#F6E5CA'
         }
     }
 })

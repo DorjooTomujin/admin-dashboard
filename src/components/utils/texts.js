@@ -4,7 +4,7 @@ import { AiOutlineArrowUp } from "react-icons/ai"
 export const WithPercentText = ({num , percent}) => {
     return (
         <HStack>
-          <Heading fontSize={22}>$</Heading>
+          <Heading fontSize={22}></Heading>
           <Heading
             sx={{ marginLeft: "4px !important" }}
             fontSize={32}
@@ -27,3 +27,4 @@ export const WithPercentText = ({num , percent}) => {
         </HStack>
     )
 }
+

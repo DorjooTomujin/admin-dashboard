@@ -5,6 +5,7 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Text,
   Tfoot,
   Th,
   Thead,
@@ -51,3 +52,25 @@ export const AuthorTable = () => {
     </TableContainer>
   );
 };
+
+export const DefaultTable = ({items, children}) => {
+  return (
+    <TableContainer w='full' p={0}>
+      <Table variant={'simple'}>
+        <Thead>
+          <Tr>
+            {items && items.map((i) => {
+              return (
+                <Th><Text textTransform={'uppercase'} color='gray.secondary'>{i}</Text></Th>
+              )
+            })}
+          </Tr>
+        </Thead>
+        <Tbody >
+            {children}
+            
+        </Tbody>
+      </Table>
+    </TableContainer>
+  )
+}
