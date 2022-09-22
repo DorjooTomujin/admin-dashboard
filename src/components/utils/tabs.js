@@ -145,9 +145,9 @@ export const DefaultTab = ({items, children}) => {
       <WithPercentText num={"1234"} percent="9.2" />
       </MenuStat>
       <TabList w='full' justifyContent={'space-between'}>
-        {items && items.map((i) => {
+        {items && items.map((i, index) => {
           return (
-            <Tab px={3} py={2} borderRadius={4} _selected={{bg:'pink.main', color:'white'}}><Text >{i}</Text></Tab>
+            <Tab px={3} py={2} key={index} borderRadius={4} _selected={{bg:'pink.main', color:'white'}}><Text >{i}</Text></Tab>
           )
         })}
       </TabList>
