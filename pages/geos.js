@@ -8,7 +8,7 @@ import {
   Legend
 } from "chart.js";
 import { useEffect, useRef, useState } from "react";
-import MAP_JSON from './geo-json.const'
+import MAP_JSON from '../src/geo-json.const'
 ChartJS.register(
     Title,
     Tooltip,
