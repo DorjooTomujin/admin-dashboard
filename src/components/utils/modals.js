@@ -11,24 +11,29 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { DefaultCard, UserCard } from "./cards";
-
-export const DefaultModal = ({ users, isOpen, onClose }) => {
+import {TableAccordian} from './accordians'
+export const DefaultModal = ({ data, modal, head,  isOpen, onClose, title }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size={modal == 'battle' ? '3xl' : 'md'}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Users</ModalHeader>
+        <ModalHeader textTransform={'capitalize'}>{title}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody maxH={'500px'} overflowY='auto'>
+        <ModalBody maxH={modal == 'battle' ? '700px' : '500px'}  overflowY='auto'>
           {
-            users && users.map((u, index) => {
+            modal != 'battle' && data && data.map((u, index) => {
               return (
                 <>
-                <UserCard img={u.img} title={u.name} text={u.email} battles={u.battles} elfc={u.elfc}/>
-          {users.length - 1 != index && (<Divider/>)}
+                <UserCard img={u.img} title={u.name} text={u.email} battles={u.battles} elfc={u.elfc} key={index}/>
+          {data.length - 1 != index && (<Divider/>)}
                 </>
               )
             })
+          }
+          {
+            modal == 'battle' && data && head && (
+              <TableAccordian data={data} head={head} isFull={true} />
+            )
           }
 
         </ModalBody>
@@ -38,3 +43,7 @@ export const DefaultModal = ({ users, isOpen, onClose }) => {
     </Modal>
   );
 };
+
+
+
+

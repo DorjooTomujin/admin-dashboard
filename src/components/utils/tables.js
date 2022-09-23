@@ -56,19 +56,18 @@ export const AuthorTable = () => {
 export const DefaultTable = ({items, children}) => {
   return (
     <TableContainer w='full' p={0}>
-      <Table variant={'simple'}>
+      <Table variant={'simple'} sx={{borderSpacing: '0 10px', borderCollapse: 'separate'}}>
         <Thead>
-          <Tr>
+          <Tr textAlign={'center'}>
             {items && items.map((i, index) => {
               return (
-                <Th key={index}><Text textTransform={'uppercase'} color='gray.secondary'>{i}</Text></Th>
+                <Th key={index} textAlign='center' ><Text textTransform={'uppercase'} color='gray.secondary'>{i}</Text></Th>
               )
             })}
           </Tr>
         </Thead>
         <Tbody >
             {children}
-            
         </Tbody>
       </Table>
     </TableContainer>

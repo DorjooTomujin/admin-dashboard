@@ -1,6 +1,13 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
   Button,
+  Grid,
+  GridItem,
   HStack,
   Image,
   MenuButton,
@@ -11,14 +18,16 @@ import {
   StatNumber,
   TabPanel,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { DatePicker as ChakraDatePicker } from "@orange_digital/chakra-datepicker";
 import { useState } from "react";
-import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import ReactSelect from "react-select";
 import DefaultGeo from "../../../pages/geos";
-import { DefaultCard, ImageCard } from "./cards";
+import { TableAccordian } from "./accordians";
+
+import { AccordionPnl, BattleCard, DefaultCard, ImageCard } from "./cards";
 import {
   AreaChart,
   BarChart,
@@ -26,7 +35,13 @@ import {
   LinesChart,
   RadarChart,
 } from "./charts";
-import { ButtonStat, ColorfulStat, DefaultStat, MenuStat } from "./stats";
+import {
+  ButtonStat,
+  ColorfulStat,
+  DefaultStat,
+  MenuStat,
+  ModalStat,
+} from "./stats";
 import { DefaultTable } from "./tables";
 import { AuthorsTab, DefaultTab, LongTab, PerformanceTab } from "./tabs";
 import { WithPercentText } from "./texts";
@@ -40,11 +55,10 @@ export const PerformanceOverview = ({ bg, color }) => {
       py={4}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
-
       h={"600px"}
       justifyContent="space-between"
       alignItems={"start"}
-      w='50%'
+      w="50%"
     >
       <PerformanceTab />
     </VStack>
@@ -60,7 +74,7 @@ export const AuthorsOverview = ({ bg, color }) => {
       py={4}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
-      w='50%'
+      w="50%"
       h={"600px"}
       justifyContent="space-between"
       alignItems={"start"}
@@ -131,8 +145,6 @@ export const RadarOverview = ({ bg, color }) => {
   );
 };
 
-
-
 export const AreaOverflow = ({ bg, color, areaItems, areaFilter }) => {
   return (
     <VStack
@@ -143,31 +155,32 @@ export const AreaOverflow = ({ bg, color, areaItems, areaFilter }) => {
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
       w={"30%"}
-
       justifyContent="space-between"
       alignItems={"center"}
     >
-
       <DefaultTab items={areaFilter}>
         {areaFilter &&
           areaFilter.map((i, index) => {
             return (
               <TabPanel w="full" key={index}>
                 <VStack w="full">
-                  <AreaChart filter={i}/>
-                  {
-                    areaItems[i] && areaItems[i].map((item, idx) => {
+                  <AreaChart filter={i} />
+                  {areaItems[i] &&
+                    areaItems[i].map((item, idx) => {
                       return (
-                        <HStack justifyContent={"space-between"} w="full" key={idx}>
-                    <Text>{item}</Text>
-                    <HStack gap={4}>
-                      <Text>1234</Text>
-                      <Text color={"green.main"}>+134</Text>
-                    </HStack>
-                  </HStack>
-                      )
-                    })
-                  }
+                        <HStack
+                          justifyContent={"space-between"}
+                          w="full"
+                          key={idx}
+                        >
+                          <Text>{item}</Text>
+                          <HStack gap={4}>
+                            <Text>1234</Text>
+                            <Text color={"green.main"}>+134</Text>
+                          </HStack>
+                        </HStack>
+                      );
+                    })}
                 </VStack>
               </TabPanel>
             );
@@ -230,7 +243,8 @@ const projectData = [
   },
 ];
 
-export const ProjectOverview = ({ bg, color }) => {
+export const BattleOverview = ({ bg, color, head, data }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <VStack
       bg={bg}
@@ -240,68 +254,80 @@ export const ProjectOverview = ({ bg, color }) => {
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
       w={"70%"}
-      h={"500px"}
+      h={"auto"}
       justifyContent="space-between"
       alignItems={"center"}
     >
-      <ButtonStat text={"Updated 37 minutes ago"}>
-        <Text fontWeight={700}>Project Stats</Text>
-      </ButtonStat>
-      <DefaultTable items={projectItems}>
-        {projectData &&
-          projectData.map((data, index) => {
-            return (
-              <tr key={index}>
-                <td>
-                  <DefaultCard
-                    img={data.img}
-                    title={data.title}
-                    text={data.text}
-                  />
-                </td>
-                <td>
-                  <Text fontWeight={700}>{data.budget}</Text>
-                </td>
-                <td>
-                  <Box
-                    w={"auto"}
-                    display="inline"
-                    mx={"auto"}
-                    color={"green.main"}
-                    bg="green.secondary"
-                    borderRadius={4}
-                  >
-                    <HStack>
-                      <Box>
-                        <BsFillArrowRightSquareFill />
-                      </Box>
-                      <Text>{data.progress}</Text>
-                    </HStack>
-                  </Box>
-                </td>
-                <td>
-                  <Box display={"inline-block"} w="auto">
-                    <ColorfulStat
-                      text={data.status}
-                      color={"blue.main"}
-                      bg="blue.secondary"
-                    />
-                  </Box>
-                </td>
-                <td>
-                  <Box w="100px">
-                    <LineChart />
-                  </Box>
-                </td>
-                <td>
-                  <Box>
-                    <BsFillArrowRightSquareFill />
-                  </Box>
-                </td>
-              </tr>
-            );
-          })}
-      </DefaultTable>
+      <ModalStat
+        onOpen={onOpen}
+        isOpen={isOpen}
+        data={data}
+        head={head}
+        onClose={onClose}
+        text={"Updated 37 minutes ago"}
+        btn="view all"
+        title={"Battle Stats"}
+      />
+      <TableAccordian isFull={false} data={data} head={head} />
+    </VStack>
+  );
+};
+
+export const QuestionOverview = ({ bg, color, head, data, filter }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [category, setCategory] = useState('')
+  const [level, setLevel] = useState('')
+  return (
+    <VStack
+      bg={bg}
+      borderRadius={"10px"}
+      px={8}
+      py={4}
+      boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
+      color={color}
+      w={"70%"}
+      h={"auto"}
+      justifyContent="space-between"
+      alignItems={"center"}
+    >
+      <ModalStat
+        onOpen={onOpen}
+        isOpen={isOpen}
+        data={data}
+        head={head}
+        onClose={onClose}
+        text={"Avg. 57 per day"}
+        btn="view all"
+        title={"Questions"}
+      >
+        {filter && (
+          <HStack>
+          <Select placeholder="Category" border={"none"} onChange={(e) => 
+            setCategory(e.target.value)
+          }>
+            {Object.keys(filter).map((f, index) => {
+              return (
+                <option value={index} key={index} style={{textTransform: 'capitalize'}}><Text textTransform={'capitalize'}>{f}</Text></option>
+              )
+            })}
+          </Select>
+          {category != '' && (
+            <Select placeholder="Level" border={"none"} onChange={(e) => setLevel(e.target.value)}>
+            {
+
+              Object.values(filter)[category].map((f, index) => {
+                return (
+                  <option value={index} key={index}>{f}</option>
+                )
+              })
+            }
+
+          </Select>
+          )}
+        </HStack>
+        )}
+      </ModalStat>
+      <TableAccordian isFull={false} data={data} head={head} />
     </VStack>
   );
 };
@@ -316,7 +342,7 @@ export const BarOverview = ({ bg, color }) => {
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
       w={"70%"}
-      h={'500px'}
+      h={"500px"}
       justifyContent="space-between"
       alignItems={"center"}
     >
@@ -432,41 +458,69 @@ export const TransferOverview = ({ bg, color, value, setValue }) => {
       <LongTab items={transferItems}>
         <TabPanel px={8}>
           <ReactSelect
-            placeholder='Coin name'
+            placeholder="Coin name"
             options={selectData}
             formatOptionLabel={(d) => (
               <HStack>
-                <Image src={d.image} w='20px' h='20px' />
+                <Image src={d.image} w="20px" h="20px" />
                 <Text>{d.label}</Text>
               </HStack>
             )}
           />
-          <Box h='6'/>
-         <HStack w='full'>
-         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
-         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
-         </HStack>
-          <Box h='6'/>
-          <Button w='full' color={'white'} bg='blue.main'>Places offer</Button>
+          <Box h="6" />
+          <HStack w="full">
+            <Box flex={1}>
+              <DefaultStat
+                text={"Amount(USD)"}
+                value={value}
+                setValue={setValue}
+              />
+            </Box>
+            <Box flex={1}>
+              <DefaultStat
+                text={"Amount(USD)"}
+                value={value}
+                setValue={setValue}
+              />
+            </Box>
+          </HStack>
+          <Box h="6" />
+          <Button w="full" color={"white"} bg="blue.main">
+            Places offer
+          </Button>
         </TabPanel>
         <TabPanel px={8}>
           <ReactSelect
-            placeholder='Coin name'
+            placeholder="Coin name"
             options={selectData}
             formatOptionLabel={(d) => (
               <HStack>
-                <Image src={d.image} w='20px' h='20px' />
+                <Image src={d.image} w="20px" h="20px" />
                 <Text>{d.label}</Text>
               </HStack>
             )}
           />
-          <Box h='6'/>
-         <HStack w='full'>
-         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
-         <Box flex={1}><DefaultStat text={'Amount(USD)'} value={value} setValue={setValue}/></Box>
-         </HStack>
-          <Box h='6'/>
-          <Button w='full' color={'white'} bg='blue.main'>Places offer</Button>
+          <Box h="6" />
+          <HStack w="full">
+            <Box flex={1}>
+              <DefaultStat
+                text={"Amount(USD)"}
+                value={value}
+                setValue={setValue}
+              />
+            </Box>
+            <Box flex={1}>
+              <DefaultStat
+                text={"Amount(USD)"}
+                value={value}
+                setValue={setValue}
+              />
+            </Box>
+          </HStack>
+          <Box h="6" />
+          <Button w="full" color={"white"} bg="blue.main">
+            Places offer
+          </Button>
         </TabPanel>
       </LongTab>
     </VStack>

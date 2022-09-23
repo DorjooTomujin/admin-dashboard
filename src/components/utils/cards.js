@@ -1,4 +1,14 @@
-import { Box, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Grid,
+  GridItem,
+  HStack,
+  Image,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import { ColorfulStat } from "./stats";
 
 export const AuthorCard = () => {
   return (
@@ -66,16 +76,66 @@ export const UserCard = ({ img, title, text, battles, elfc }) => {
         </VStack>
       </HStack>
 
-      
-        <VStack alignItems={'end'}>
+      <VStack alignItems={"end"}>
         {battles && (
           <Text fontWeight={600} fontSize="20px">
             {battles} battles
           </Text>
-          )}
-          <Text sx={{ marginTop: "0 !important" }}>{elfc != undefined ? elfc : 0} elfc</Text>
-        </VStack>
-      
+        )}
+        <Text sx={{ marginTop: "0 !important" }}>
+          {elfc != undefined ? elfc : 0} elfc
+        </Text>
+      </VStack>
     </HStack>
   );
 };
+
+export const AccordionPnl = ({ data }) => {
+  return (
+    <>
+      <GridItem
+        py={2}
+        justifyContent="center"
+        gridColumnStart={1}
+        gridColumnEnd={3}
+      >
+        <DefaultCard img={data.img} title={data.name} text={data.rank} />
+      </GridItem>
+      <GridItem>
+        <VStack h='full'><Text m='auto'>{data.reward}</Text></VStack>
+      </GridItem>
+      <GridItem>
+        <VStack h='full'><Text m='auto'>{data.reward}</Text></VStack>
+      </GridItem>
+      <GridItem>
+        <VStack h={'full'}><Text m='auto'>{data.reward}</Text></VStack>
+      </GridItem>
+      <GridItem>
+        <HStack w="full" h='full'>
+          <Box display={"inline-block"} m="auto" w="auto">
+            <ColorfulStat
+              text={data.status}
+              color={
+                data.status == "completed"
+                  ? "green.main"
+                  : data.status == "in process"
+                  ? "blue.main"
+                  : "yellow.main"
+              }
+              bg={
+                data.status == "completed"
+                  ? "green.secondary"
+                  : data.status == "in process"
+                  ? "blue.secondary"
+                  : "yellow.secondary"
+              }
+            />
+          </Box>
+        </HStack>
+      </GridItem>
+    </>
+  );
+};
+
+
+export const BattleCard = ({})

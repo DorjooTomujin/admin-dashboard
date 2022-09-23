@@ -23,6 +23,7 @@ import { RiShareForwardBoxLine } from "react-icons/ri";
 import { WithPercentText } from "./texts";
 import { DefaultMenu } from "./menus";
 import { DefaultModal } from "./modals";
+import { ModalButton } from "./buttons";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const ActiveBox = ({ bg, num, pending, percent, color }) => {
@@ -118,7 +119,7 @@ export const ProfessionalBox = ({
   isOpen,
   onOpen,
   onClose,
-  battles
+  battles,
 }) => {
   return (
     <VStack
@@ -132,28 +133,33 @@ export const ProfessionalBox = ({
       justifyContent="space-between"
       alignItems={"start"}
     >
-      <HStack justifyContent={'space-between'} w='full'><Box textAlign={'start'}>
-        <Heading fontSize={32}>{users.length > 0 ? users.length : 0}</Heading>
-        <Text>Users</Text>
-      </Box>
-      <Box textAlign={'end'}>
-        <Heading fontSize={32}>{battles > 0 ? battles : 0}</Heading>
-        <Text>Battles</Text>
-      </Box></HStack>
-      <Box h={4}/>
+      <HStack justifyContent={"space-between"} w="full">
+        <Box textAlign={"start"}>
+          <Heading fontSize={32}>{users.length > 0 ? users.length : 0}</Heading>
+          <Text>Users</Text>
+        </Box>
+        <Box textAlign={"end"}>
+          <Heading fontSize={32}>{battles > 0 ? battles : 0}</Heading>
+          <Text>Battles</Text>
+        </Box>
+      </HStack>
+      <Box h={4} />
       <VStack alignItems={"start"}>
         {/* <Text fontWeight={700}>Today’s Heroes</Text> */}
-        <Button variant={"unstyled"} onClick={onOpen}>
-            <AvatarGroup size="md" max={4}>
-              {users && users.map((u, index) => {
-                return (
-                  <Avatar name={u.name} src={u.img} key={index}/>
-                )
+        <ModalButton onOpen={onOpen} >
+          <AvatarGroup size="md" max={4}>
+            {users &&
+              users.map((u, index) => {
+                return <Avatar name={u.name} src={u.img} key={index} />;
               })}
-            </AvatarGroup>
-        </Button>
-          <DefaultModal isOpen={isOpen} onClose={onClose} users={users}>
-          </DefaultModal>
+          </AvatarGroup>
+        </ModalButton>
+        <DefaultModal
+          isOpen={isOpen}
+          onClose={onClose}
+          data={users}
+          title="users"
+        ></DefaultModal>
       </VStack>
     </VStack>
   );

@@ -38,6 +38,10 @@ const theme = extendTheme({
         },
         orange: {
             skin: '#F6E5CA'
+        },
+        yellow: {
+            main: '#ffc700',
+            secondary: '#fff8dd'
         }
     }
 })
