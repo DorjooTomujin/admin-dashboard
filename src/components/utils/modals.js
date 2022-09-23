@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   Modal,
@@ -23,10 +24,10 @@ export const DefaultModal = ({ data, modal, head,  isOpen, onClose, title }) => 
           {
             modal != 'battle' && data && data.map((u, index) => {
               return (
-                <>
-                <UserCard img={u.img} title={u.name} text={u.email} battles={u.battles} elfc={u.elfc} key={index}/>
+                <Box key={index}>
+                <UserCard img={u.img} title={u.name} text={u.email} battles={u.battles} elfc={u.elfc} />
           {data.length - 1 != index && (<Divider/>)}
-                </>
+                </Box>
               )
             })
           }

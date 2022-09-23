@@ -1,50 +1,23 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
-  Grid,
-  GridItem,
   HStack,
   Image,
-  MenuButton,
   Select,
-  Stat,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
   TabPanel,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { DatePicker as ChakraDatePicker } from "@orange_digital/chakra-datepicker";
 import { useState } from "react";
 import ReactSelect from "react-select";
 import DefaultGeo from "../../../pages/geos";
 import { TableAccordian } from "./accordians";
 
-import { AccordionPnl, BattleCard, DefaultCard, ImageCard } from "./cards";
-import {
-  AreaChart,
-  BarChart,
-  LineChart,
-  LinesChart,
-  RadarChart,
-} from "./charts";
-import {
-  ButtonStat,
-  ColorfulStat,
-  DefaultStat,
-  MenuStat,
-  ModalStat,
-} from "./stats";
-import { DefaultTable } from "./tables";
+import { ImageCard } from "./cards";
+import { AreaChart, BarChart, LinesChart, RadarChart } from "./charts";
+import { DefaultStat, MenuStat, ModalStat } from "./stats";
 import { AuthorsTab, DefaultTab, LongTab, PerformanceTab } from "./tabs";
-import { WithPercentText } from "./texts";
 
 export const PerformanceOverview = ({ bg, color }) => {
   return (
@@ -275,8 +248,8 @@ export const BattleOverview = ({ bg, color, head, data }) => {
 
 export const QuestionOverview = ({ bg, color, head, data, filter }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [category, setCategory] = useState('')
-  const [level, setLevel] = useState('')
+  const [category, setCategory] = useState("");
+  const [level, setLevel] = useState("");
   return (
     <VStack
       bg={bg}
@@ -302,29 +275,38 @@ export const QuestionOverview = ({ bg, color, head, data, filter }) => {
       >
         {filter && (
           <HStack>
-          <Select placeholder="Category" border={"none"} onChange={(e) => 
-            setCategory(e.target.value)
-          }>
-            {Object.keys(filter).map((f, index) => {
-              return (
-                <option value={index} key={index} style={{textTransform: 'capitalize'}}><Text textTransform={'capitalize'}>{f}</Text></option>
-              )
-            })}
-          </Select>
-          {category != '' && (
-            <Select placeholder="Level" border={"none"} onChange={(e) => setLevel(e.target.value)}>
-            {
-
-              Object.values(filter)[category].map((f, index) => {
+            <Select
+              placeholder="Category"
+              border={"none"}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {filter.map((f, index) => {
                 return (
-                  <option value={index} key={index}>{f}</option>
-                )
-              })
-            }
-
-          </Select>
-          )}
-        </HStack>
+                  <option
+                    value={index}
+                    key={index}
+                  >
+                    <Text >{f.category}</Text>
+                  </option>
+                );
+              })}
+            </Select>
+            {category != "" && (
+              <Select
+                placeholder="Level"
+                border={"none"}
+                onChange={(e) => setLevel(e.target.value)}
+              >
+                {filter[category].levels.map((f, index) => {
+                  return (
+                    <option value={index} key={index}>
+                      {f}
+                    </option>
+                  );
+                })}
+              </Select>
+            )}
+          </HStack>
         )}
       </ModalStat>
       <TableAccordian isFull={false} data={data} head={head} />

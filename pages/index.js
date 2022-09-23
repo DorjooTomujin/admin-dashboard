@@ -232,9 +232,12 @@ export default function Home() {
 
 
   const questionTitle = 
-    {
-      'english': ['B1', 'B2', 'C1', 'C2'],
-    }
+    [
+      {
+        'category': 'english',
+        'levels':  ['B1', 'B2', 'C1', 'C2']
+      }
+    ]
   
   const questionHead = ['total', 'correct', 'incorrect', 'chart']
   const questionData = [
