@@ -11,9 +11,9 @@ export const TableAccordian = ({head, data, isFull}) => {
           justifyContent="space-between"
         >
           {head &&
-            head.map((h) => {
+            head.map((h, index) => {
               return (
-                <GridItem justifyContent={"center"}>
+                <GridItem justifyContent={"center"} key={index}>
                   <Text
                     textAlign={"center"}
                     fontWeight={700}
