@@ -138,16 +138,16 @@ export const AuthorsTab = () => {
   );
 };
 
-export const DefaultTab = ({items, children}) => {
+export const DefaultTab = ({items,user, children, setUserDisplay, userFilter, setUserFilter}) => {
   return (
     <Tabs w='full' variant={'unstyled'}>
-          <MenuStat text={"Avg. Agent Earnings"}>
-      <WithPercentText num={"1234"} percent="9.2" />
+          <MenuStat text={"Avg. Agent Earnings"} setUserDisplay={setUserDisplay}>
+      <WithPercentText num={user}  />
       </MenuStat>
       <TabList w='full' justifyContent={'space-between'}>
         {items && items.map((i, index) => {
           return (
-            <Tab px={3} py={2} key={index} borderRadius={4} _selected={{bg:'pink.main', color:'white'}}><Text >{i}</Text></Tab>
+            <Tab px={3} py={2} key={index} borderRadius={4} onClick={() => setUserFilter(i)} _selected={{bg:'pink.main', color:'white'}}><Text >{i}</Text></Tab>
           )
         })}
       </TabList>

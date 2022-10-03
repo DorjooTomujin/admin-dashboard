@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { DefaultCard, UserCard } from "./cards";
 import {TableAccordian} from './accordians'
@@ -25,7 +26,7 @@ export const DefaultModal = ({ data, modal, head,  isOpen, onClose, title }) => 
             modal != 'battle' && data && data.map((u, index) => {
               return (
                 <Box key={index}>
-                <UserCard img={u.img} title={u.name} text={u.email} battles={u.battles} elfc={u.elfc} />
+                <UserCard img={u.img} title={u.username} text={u.email} health={u.health} level={u.level} />
           {data.length - 1 != index && (<Divider/>)}
                 </Box>
               )
@@ -44,6 +45,38 @@ export const DefaultModal = ({ data, modal, head,  isOpen, onClose, title }) => 
     </Modal>
   );
 };
+
+export const UserModal = ({userDisplay, setUserDisplay}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+
+
+<Modal isOpen={!isOpen} onClose={() => {
+  onOpen(),
+  setUserDisplay('')
+}}>
+  <ModalOverlay />
+  <ModalContent>
+    <ModalHeader>{userDisplay}</ModalHeader>
+    <ModalCloseButton />
+    <ModalBody>
+
+    </ModalBody>
+
+    <ModalFooter>
+      <Button colorScheme='blue' mr={3} onClick={(() => {
+        onOpen(),
+        setUserDisplay('')
+      })}>
+        Close
+      </Button>
+      <Button variant='ghost'>Secondary Action</Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal></>
+  )
+}
 
 
 

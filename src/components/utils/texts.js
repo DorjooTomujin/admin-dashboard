@@ -12,7 +12,8 @@ export const WithPercentText = ({num , percent}) => {
           >
             {num}
           </Heading>
-          <HStack
+          {
+            percent && <HStack
             bg={"green.secondary"}
             color="green.main"
             p={1}
@@ -24,6 +25,7 @@ export const WithPercentText = ({num , percent}) => {
               {percent}%
             </Heading>
           </HStack>
+          }
         </HStack>
     )
 }

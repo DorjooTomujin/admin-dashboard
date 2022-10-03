@@ -150,7 +150,7 @@ export const ProfessionalBox = ({
           <AvatarGroup size="md" max={4}>
             {users &&
               users.map((u, index) => {
-                return <Avatar name={u.name} src={u.img} key={index} />;
+                return <Avatar name={u.name ? u.name : ''} src={u.img} key={index} />;
               })}
           </AvatarGroup>
         </ModalButton>

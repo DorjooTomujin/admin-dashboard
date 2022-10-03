@@ -1,7 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 import { BsThreeDots } from "react-icons/bs"
 
-export const DefaultMenu = () => {
+export const DefaultMenu = ({setUserDisplay}) => {
     return (
         <Menu>
           <MenuButton
@@ -16,10 +16,10 @@ export const DefaultMenu = () => {
             <BsThreeDots/>
           </MenuButton>
           <MenuList>
-            <MenuItem>New File</MenuItem>
-            <MenuItem>New Window</MenuItem>
-            <MenuItem>Open...</MenuItem>
-            <MenuItem>Save File</MenuItem>
+            <MenuItem onClick={() => setUserDisplay('')}>View</MenuItem>
+            <MenuItem onClick={() => setUserDisplay('ban')}>Ban User</MenuItem>
+            <MenuItem onClick={() => setUserDisplay('create')}>Create User</MenuItem>
+            {/* <MenuItem>Save File</MenuItem> */}
           </MenuList>
         </Menu>
     )

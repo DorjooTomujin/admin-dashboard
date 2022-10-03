@@ -2,12 +2,17 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import theme from '../src/theme'
 import Layout from '../src/components/layout'
+import { useState } from 'react'
+import Login from './login'
 function MyApp({ Component, pageProps }) {
+  const [isLogged, setIsLogged] = useState(false)
   return (
     <ChakraProvider resetCSS theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {
+        !isLogged ? (<Layout>
+          <Component {...pageProps} />
+        </Layout>) : <Login/>
+      }
     </ChakraProvider>
   )
 }

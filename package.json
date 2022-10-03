@@ -13,6 +13,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@orange_digital/chakra-datepicker": "^1.0.3",
+    "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "chartjs-chart-geo": "^3.9.0",
     "framer-motion": "^7.2.0",

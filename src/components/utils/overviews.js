@@ -118,7 +118,7 @@ export const RadarOverview = ({ bg, color }) => {
   );
 };
 
-export const AreaOverflow = ({ bg, color, areaItems, areaFilter }) => {
+export const AreaOverflow = ({userFilter,setUserFilter,userByDate, bg,user, color, areaItems, areaFilter, setUserDisplay ,data}) => {
   return (
     <VStack
       bg={bg}
@@ -131,14 +131,14 @@ export const AreaOverflow = ({ bg, color, areaItems, areaFilter }) => {
       justifyContent="space-between"
       alignItems={"center"}
     >
-      <DefaultTab items={areaFilter}>
+      <DefaultTab user={user} items={areaFilter} userFilter={userFilter} setUserFilter={setUserFilter} setUserDisplay={setUserDisplay}>
         {areaFilter &&
           areaFilter.map((i, index) => {
             return (
               <TabPanel w="full" key={index}>
                 <VStack w="full">
-                  <AreaChart filter={i} />
-                  {areaItems[i] &&
+                  <AreaChart filter={i} data={data}/>
+                  {areaItems && areaItems[i]   &&
                     areaItems[i].map((item, idx) => {
                       return (
                         <HStack
@@ -148,8 +148,11 @@ export const AreaOverflow = ({ bg, color, areaItems, areaFilter }) => {
                         >
                           <Text>{item}</Text>
                           <HStack gap={4}>
-                            <Text>1234</Text>
-                            <Text color={"green.main"}>+134</Text>
+   
+                            {
+                            <Text>{data[idx]}</Text>
+                            }
+                            {/* <Text color={"green.main"}>+134</Text> */}
                           </HStack>
                         </HStack>
                       );
@@ -226,7 +229,7 @@ export const BattleOverview = ({ bg, color, head, data }) => {
       py={4}
       boxShadow="0 0 20px 0 rgba(76, 87, 125, .02)"
       color={color}
-      w={"70%"}
+      w={"auto"}
       h={"auto"}
       justifyContent="space-between"
       alignItems={"center"}
@@ -286,7 +289,7 @@ export const QuestionOverview = ({ bg, color, head, data, filter }) => {
                     value={index}
                     key={index}
                   >
-                    <Text >{f.category}</Text>
+                    {f.category}
                   </option>
                 );
               })}

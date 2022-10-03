@@ -192,7 +192,8 @@ export const areaLabels = {
 
 
 
-export const AreaChart = ({filter}) => {
+export const AreaChart = ({filter,data}) => {
+
 
   const areaData = {
     labels: areaLabels[filter],
@@ -200,7 +201,7 @@ export const AreaChart = ({filter}) => {
       {
         fill: true,
         label: 'All Users Grow up',
-        data: areaLabels[filter].map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        data: areaLabels[filter].map((d, i) => data[i]),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },

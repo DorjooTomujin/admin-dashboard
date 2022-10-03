@@ -41,7 +41,7 @@ export const TableAccordian = ({ head, data, isFull }) => {
       {data &&
         data.map((d, index) => {
           return (
-            <>
+            <div key={index}>
               {index < (!isFull ? 4 : data.length) && (
                 <AccordionItem w={"full"} border={"none"} >
                   <Grid
@@ -50,27 +50,27 @@ export const TableAccordian = ({ head, data, isFull }) => {
                   >
                     <GridItem>
                       <VStack h="full">
-                        <Text m="auto">{d.num}</Text>
+                        <Text m="auto">{index + 1}</Text>
                       </VStack>
                     </GridItem>
 
                     <GridItem>
                       <VStack h="full">
                         <Text fontWeight={700} m="auto">
-                          {d.winner}
+                          {d.winner._id}
                         </Text>
                       </VStack>
                     </GridItem>
 
                     <GridItem>
                       <VStack h="full">
-                        <Text m="auto">{d.period}</Text>
+                        <Text m="auto">{d.winner.score}</Text>
                       </VStack>
                     </GridItem>
 
                     <GridItem>
                       <VStack h="full">
-                        <Text m="auto">{d.bet}</Text>
+                        <Text m="auto">{d.winner.amount}</Text>
                       </VStack>
                     </GridItem>
 
@@ -122,7 +122,7 @@ export const TableAccordian = ({ head, data, isFull }) => {
                   </AccordionPanel>
                 </AccordionItem>
               )}
-            </>
+            </div>
           );
         })}
     </Accordion>

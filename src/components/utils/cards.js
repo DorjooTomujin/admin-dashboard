@@ -59,7 +59,7 @@ export const ImageCard = ({ img, text, text1, children, bg }) => {
   );
 };
 
-export const UserCard = ({ img, title, text, battles, elfc }) => {
+export const UserCard = ({ img, title, text, health, level }) => {
   return (
     <HStack gap={0.5} py={4} w="full" justifyContent={"space-between"}>
       <HStack>
@@ -67,7 +67,7 @@ export const UserCard = ({ img, title, text, battles, elfc }) => {
           w={"40px"}
           h="40px"
           objectFit={"cover"}
-          src={img}
+          src={img ? img : 'https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg'}
           borderRadius={"full"}
         />
         <VStack alignItems={"start"}>
@@ -77,13 +77,13 @@ export const UserCard = ({ img, title, text, battles, elfc }) => {
       </HStack>
 
       <VStack alignItems={"end"}>
-        {battles && (
+        {health && (
           <Text fontWeight={600} fontSize="20px">
-            {battles} battles
+            {health} health
           </Text>
         )}
         <Text sx={{ marginTop: "0 !important" }}>
-          {elfc != undefined ? elfc : 0} elfc
+          {level != undefined ? level : 0} level
         </Text>
       </VStack>
     </HStack>

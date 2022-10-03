@@ -10,7 +10,7 @@ import { DefaultButton, ModalButton } from "./buttons";
 import { DefaultMenu } from "./menus";
 import { DefaultModal } from "./modals";
 
-export const MenuStat = ({ text, children }) => {
+export const MenuStat = ({ text, children, setUserDisplay }) => {
   return (
     <HStack justifyContent={"space-between"} w="full" alignItems={"center"}>
       <VStack alignItems={"start"}>
@@ -18,7 +18,7 @@ export const MenuStat = ({ text, children }) => {
         <Text fontSize={"14px"}>{text}</Text>
       </VStack>
 
-      <DefaultMenu />
+      <DefaultMenu setUserDisplay={setUserDisplay} />
     </HStack>
   );
 };
